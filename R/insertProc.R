@@ -20,10 +20,10 @@ query_demo <- "CREATE OR REPLACE PROCEDURE insertDemo(IN json VARCHAR(9999))
       JSON_EXTRACT(json, '$.property')
    )"
 
-rs <- DBI::dbSendStatement (con_t, query_response)
-DBI::dbClearResult (rs)
+rs <- DBI::dbSendStatement(con_t, query_response)
+DBI::dbClearResult(rs)
 
-rs <- DBI::dbSendStatement (con_t, query_demo)
-DBI::dbClearResult (rs)
+rs <- DBI::dbSendStatement(con_t, query_demo)
+DBI::dbClearResult(rs)
 
 DBI::dbDisconnect(con_t)

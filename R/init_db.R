@@ -8,7 +8,7 @@ con <- DBI::dbConnect(
 stmt_db <- paste ('CREATE DATABASE IF NOT EXISTS', sql_dbname)
 
 rs <- DBI::dbSendStatement(con, stmt_db)
-DBI::dbClearResult (rs)
+DBI::dbClearResult(rs)
 DBI::dbDisconnect(con)
 
 cat ("database generated successfully \n")

@@ -1,4 +1,4 @@
-qname <- commandArgs (TRUE)
+qname <- commandArgs(TRUE)
 
 readRenviron(".env")
 
@@ -13,6 +13,6 @@ con <- DBI::dbConnect(
 
 query <- "update frequency_counter set n = 0"
 
-rs <- DBI::dbSendStatement (con, query)
-DBI::dbClearResult (rs)
-DBI::dbDisconnect (con)
+rs <- DBI::dbSendStatement(con, query)
+DBI::dbClearResult(rs)
+DBI::dbDisconnect(con)

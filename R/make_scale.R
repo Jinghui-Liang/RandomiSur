@@ -1,8 +1,8 @@
-if (file.exists ("/.dockerenv")) {
+if(file.exists("/.dockerenv")) {
   questPath <- paste0("/var/scalepool/", quest_name)
   outputDir <- "/var/www/html/"
 } else {
-  if (interactive()) {
+  if(interactive()) {
       questPath <- "../scalepool/fullscale.csv"
       # questPath <- "../inject-order/fullscale.csv"
   } else {

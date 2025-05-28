@@ -1,4 +1,4 @@
-if (file.exists ("/.dockerenv")) {
+if(file.exists("/.dockerenv")) {
   arcPath <- "/var/scalepool/"
   # outputDir <- "/var/scalepool"
 } else {
