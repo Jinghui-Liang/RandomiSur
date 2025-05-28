@@ -4,7 +4,7 @@ This page contains descriptions for all strategies listed on "builder" tap. All 
 
 - **Fixed order** applies no control to item sequences. Items are presented for all participants as they originally stays on a scale.
 - **Simple randomization**, as its name suggested, fully randomizes the presentation order of the scale for each participant.
-- **Permuted-Subblock Randomization (PSR)** splits sequences into subblocks, with each subblock having one item per factor(subscale). Then PSR randomly permute orders within each subblocks and concatenate them to a new sequence. PSR is independently conducted for each participant. For details, please visit [Liang and Barr, 2024](https://pubmed.ncbi.nlm.nih.gov/39666537/).
+- **Permuted-Subblock Randomization (PSR)** splits sequences into subblocks, with each subblock having one item per factor(subscale). Then PSR randomly permute orders within each subblocks and concatenate them to a new sequence. PSR is independently conducted for each participant. For details, refer to [Liang and Barr, 2024](https://pubmed.ncbi.nlm.nih.gov/39666537/).
 - **Latin Square** generates a $k \times k$ square where $k$ represents item numbers. Each item only appears once per row and per column in this square. Each row of this square will be seen as a presentation order, and will be assigned to participants.
 - **Grouping** methods cluster items under the same factor(subscale) together. Currently, four variations are available:
     - *Fixed Grouping* fixes the factor sequence and item sequences per factor across participants, which means all participant receive the same 'grouping' order.

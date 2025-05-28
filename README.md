@@ -7,7 +7,7 @@ RandomiSur is a free, open-source platform to design online surveys and collect 
 - RandomiSur can collect participants' reaction time for each item.
 - Most RandomiSur components can be managed by R language, which makes application modification feasible for advanced users.
 
-RandomiSur is an early-stage project and would be under continual maintainence. For users who want to programme jsPsych experiments completely in R, I recommand trying two R packages: [**`{jaysire}`**](https://jaysire.djnavarro.net/index.html) and [**`{jspsychr}`**](https://www.crumplab.com/jspsychr/index.html). However, neither `{jaysire}` nor `{jspsychr}` integrateed online database configuration. Therefore, they might be more appropriate in lab environments. Future development of RandomiSur might consider including these two packages to create a fully R-based workflow that also sets up a ready-to-go solution for configuring network connation.
+RandomiSur is an early-stage project and would be under continual maintainence. For users who want to programme jsPsych experiments completely in R, I recommand trying two R packages: [`{jaysire}`](https://jaysire.djnavarro.net/index.html) and [`{jspsychr}`](https://www.crumplab.com/jspsychr/index.html). However, neither `{jaysire}` nor `{jspsychr}` integrateed online database configuration. Therefore, they might be more appropriate in lab environments. Future development of RandomiSur might consider including these two packages to create a fully R-based workflow that also sets up a ready-to-go solution for configuring network connation.
 
 # Dependencies
 
@@ -46,7 +46,6 @@ There are two ways to prepare a questionnarie file. First, use the provied funct
 
 Second, prepare a questionnaire like below, and save it as csv file:
 
-|-----------------------------------|-----------------------------|----------|--------|-------------|
 | question                          | choices                     | required | label  | demographic |
 |-----------------------------------|-----------------------------|----------|--------|-------------|
 | What is your age?                 |                             | n        | age    | y           |
@@ -54,7 +53,6 @@ Second, prepare a questionnaire like below, and save it as csv file:
 | I am the life of the party.       | Inaccurate/Neutral/Accurate | y        | E      |             |
 | I feel little concern for others. |                             | n        | A      |             |
 | I am always prepared.             |                             |          | C      |             |
-|-----------------------------------|-----------------------------|----------|--------|-------------|
 
 The following column names are required and keep them consistent as below:
 
@@ -66,7 +64,7 @@ The following column names are required and keep them consistent as below:
 - For column `label`, type the variable names for demographic items, and factor labels for scale items (i.e., which subscale an item belongs to).
 - Column `demographic` tells if an item is a demographic item or scale item. Only recognizing `y` as symbol of demographic items.
 
-Save the questionnaire in `scalepool` directory.
+The full template can be also accessed by the following R code.
 
 ``` r 
   dat <- readr::read_csv("./scalepool/fullscale.csv")
@@ -74,7 +72,7 @@ Save the questionnaire in `scalepool` directory.
   head(dat, 10)
 ```
 
-A full questionnaire template can be found [here](file:scalepool/fullscale.csv).
+Once finished, save the questionnaire in `scalepool` directory.
 
 ### Randomize items with `inject-order`
 
@@ -84,7 +82,7 @@ Launch the shiny app `inject-order` by
 Rscript -e "shiny::runApp('inject-order')"
 ```
 
-Users will then be taken to the interface of `inject-order`. If not, type the url from the shell prompt (e.g., [http://127.0.0.1:4726]()). Then, users should upload the csv file that is stored on `surveypool` directory. Successful submission will generate a preview on "data" panel. Then users should head to "order" panel to start organizing presentation orders and target sample sizes under each methods. Currently, this platform provides eleven methods to arrange presentation order with details of available [here](file:inject-order/description.md).
+Users will then be taken to the interface of `inject-order`. If not, type the url from the shell prompt.  Then, users should upload the csv file that is stored on `surveypool` directory. Successful submission will generate a preview on "data" panel. Then users should head to "order" panel to start organizing presentation orders and target sample sizes under each methods. Currently, this platform provides eleven methods to arrange presentation order with details of available [here](file:inject-order/description.md).
 
 Once the arrangement is finished, users can go to "plan" anal to inspect selected methods and corresponding sample sizes. For "fixed" collections (e.g., fx, gff, cff), all participants will receive the same presentation order. But for the rest methods, participants will receive sequences that is independently randomized. Users should click the download button on the top to download the compressed archive, `df-order.zip` to get the plan files. Decompressing is not needed because scripts later on will do so automatically.
 
