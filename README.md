@@ -84,9 +84,9 @@ Rscript -e "shiny::runApp('inject-order')"
 
 Users will then be taken to the interface of `inject-order`. If not, type the url from the shell prompt.  Then, users should upload the csv file that is stored on `surveypool` directory. Successful submission will generate a preview on "data" panel. Then users should head to "order" panel to start organizing presentation orders and target sample sizes under each methods. Currently, this platform provides eleven methods to arrange presentation order with details of available [here](file:inject-order/description.md).
 
-Once the arrangement is finished, users can go to "plan" anal to inspect selected methods and corresponding sample sizes. For "fixed" collections (e.g., fx, gff, cff), all participants will receive the same presentation order. But for the rest methods, participants will receive sequences that is independently randomized. Users should click the download button on the top to download the compressed archive, `df-order.zip` to get the plan files. Decompressing is not needed because scripts later on will do so automatically.
+Once the arrangement is finished, users can go to "plan" to inspect selected methods and corresponding sample sizes. For "fixed" collections (e.g., fx, gff, cff), all participants will receive the same presentation order. But for the rest of the methods, participants will receive sequences that are independently randomized. Users should click the download button on the top to download the compressed archive, `df-order.zip` to get the plan files. Decompressing is not needed because scripts later on will do so automatically.
 
-NB: If you already have a order list and plan (like the two csv files inside the downloaded `df-order.zip`), compress them and replace the downloaded one. No need to use `inject-order` to do further adjustment.
+NB: If you already have an order list and plan (like the two csv files inside the downloaded `df-order.zip`), compress them and replace the downloaded one. No need to use `inject-order` to do further adjustment.
 
 ### Initialize Docker container and database
 
