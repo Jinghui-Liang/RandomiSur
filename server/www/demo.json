@@ -12,26 +12,5 @@
     "required": "n",
     "label": "gender",
     "demographic": "y"
-  },
-  {
-    "prompt": "What is your educational background?",
-    "choices": ["high school", "under graduate", "postgraduate"],
-    "required": "n",
-    "label": "education",
-    "demographic": "y"
-  },
-  {
-    "prompt": "What is your email address?",
-    "choices": [null],
-    "required": "y",
-    "label": "email",
-    "demographic": "y"
-  },
-  {
-    "prompt": "What is your financial case?",
-    "choices": ["low", "mid", "high"],
-    "required": "y",
-    "label": "financial",
-    "demographic": "y"
   }
 ]

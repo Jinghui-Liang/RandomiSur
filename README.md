@@ -128,6 +128,16 @@ To download and inspect datasets, users can execute `download_rawdat.R` by the f
 
 Use `local`, `f`, `fullscale` as three answers to the prompts, this command downloads demographic dataset, response dataset, and participant-order pairs dataset (recording which participant received which order). If only response dataset is of interest, use `r` as the argument instead of `f`. Alternatively, users can directly access `R/download_rawdat.R` and change the network connection and download the data using `dplyr::tbl()` and `dplyr::collect()` functions.
 
+### Finishing the test
+
+When you finish testing the survey, conduct `exit` or press `Ctrl + d` to disconnect from the docker. Then on Terminal, execute
+
+``` shell
+docker-compose down
+```
+
+To terminate containers we just created. This returns some storages of the machine.
+
 ### Launch a survey
 
 If everything goes fine so far, we have finished the testing section. Now users might want to submit the test to a hosted server (i.e., making this test online). To do so they can change the (hidden) `.env` file on the root directory of RandomiSur. The default configuration of `.env` is:

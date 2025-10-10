@@ -1,102 +1,102 @@
 [
   {
     "prompt": "I am the life of the party.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "n"
   },
   {
     "prompt": "I feel little concern for others.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "n"
   },
   {
     "prompt": "I am always prepared.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
-    "required": "n"
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
+    "required": "y"
   },
   {
     "prompt": "I get stressed out easily.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
-    "required": "n"
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
+    "required": "y"
   },
   {
     "prompt": "I have a rich vocabulary.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
-    "required": "n"
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
+    "required": "y"
   },
   {
     "prompt": "I don't talk a lot.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I am interested in people.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I leave my belongings around.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I am relaxed most of the time.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I have difficulty understanding abstract ideas.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I feel comfortable around people.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I insult people.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I pay attention to details.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I worry about things.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I have a vivid imagination.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I keep in the background.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I sympathize with others' feelings.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I make a mess of things.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I seldom feel blue.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   },
   {
     "prompt": "I am not interested in abstract ideas.",
-    "choices": ["Very Inaccurate", "Moderately\nInaccurate", "Very\nAccurate"],
+    "choices": ["Inaccurate", "Neutral", "Accurate"],
     "required": "y"
   }
 ]
