@@ -4,6 +4,8 @@ library(tidyverse)
 
 source("./default.R")
 
+readRenviron("/var/.env")
+
 ui <- page_sidebar(
     title = "Order builder",
     sidebar = sidebar(helpText = "Randomization strategies",
@@ -13,7 +15,12 @@ ui <- page_sidebar(
                                      "text/comma-separated-values",
                                      ".csv"
                                      )
-                      ),                          
+                      ),
+                      numericInput(
+                          inputId = "Seed",
+                          label = "seed",
+                          value = 1
+                      ),
                       checkboxGroupInput(
                           inputId = "select",
                           label = "Select Option",
@@ -105,14 +112,24 @@ ui <- page_sidebar(
                               label = "N_subj for Random Cycling - both",
                               value = 3))
                       ),
-    downloadButton(
-        outputId = "download",
-        label = "Download order datasets"
-    ),
+
     ## downloadButton(
-    ##     outputId = "dplan",
-    ##     label = "Download plan datasets"
+    ##     outputId = "download",
+    ##     label = "Download order datasets"
     ## ),
+    div(
+        style = "display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;",
+        downloadButton(
+            outputId = "download",
+            label = "Download orders"
+        ),
+        actionButton(
+            inputId = "stop_app",
+            label = "Finish and exit",
+            class = "btn-outline-danger"
+        )
+    ),
+
     navset_card_underline(
         title = "orders",
         ## panel 1 shows raw data
@@ -126,7 +143,7 @@ ui <- page_sidebar(
         nav_panel(title = "plan",
                   tableOutput(outputId = "order_plan")),
         ## panel 4 shows usage for each strategy
-        nav_panel(title = "description",
+        nav_panel(title = "help page",
                   fluidRow(
                       includeMarkdown("./description.md")
                   ))
@@ -135,6 +152,10 @@ ui <- page_sidebar(
 
 server <- function(input, output){
 
+    observeEvent(input$stop_app, {
+        shiny::stopApp()
+    })
+    
     get_data <- reactive({
         data <- suppressMessages(
             readr::read_csv(input$file$datapath))
@@ -158,7 +179,8 @@ server <- function(input, output){
     get_order <- reactive({
         generate_plan(data = tidy_scale(get_data()),
                       plan_ls = input$select,
-                      subj_ls = get_n())
+                      subj_ls = get_n(),
+                      seed = input$Seed)
     })
 
     get_plan <- reactive({
@@ -169,15 +191,17 @@ server <- function(input, output){
     ## dynamic output for panel "data"
     output$order_frame <- renderTable({
         if(length(input$file) == 0) {
-            paste("no file is selected")
+            paste('Select a file from "scalepool" directory to start.')
         } else {
             get_data()
         }
     })
-
+    
     ## dynamic output for panel "builder"
     output$strategy <- renderText({
-        text <- paste("Current plans:", paste(input$select, collapse = ", "), ".")
+        if(is.null(input$file)){
+            stop('Select a file from "scalepool" directory to start.')
+        } else {text <- paste("Current plans:", paste(input$select, collapse = ", "), ".")}
     })
 
     output$plan <- renderTable({
@@ -198,13 +222,12 @@ server <- function(input, output){
             paste("No strategy has been selected yet.")
         } else {
             f.order <- get_plan()
-                ## plan_subj(plan = output$plan,
-                ##                  subj_ls = get_n())
+            ## plan_subj(plan = output$plan,
+            ##                  subj_ls = get_n())
         }
     })
-        
+    
     ## refer to ui for output on panel 'description'.
-
     output$download <- downloadHandler(
         filename = function(){"df-order.zip"},
         content = function(file) {
@@ -217,7 +240,7 @@ server <- function(input, output){
             zip::zip(zipfile = file, files = fnames)
         },
         contentType = "application/zip"
-        )
+    )
 
     ## output$download <- downloadHandler(
     ##     filename = function(){"df-plan.csv"},
@@ -227,4 +250,9 @@ server <- function(input, output){
     ##     )
 }
 
-shinyApp(ui = ui, server = server)
+app_port <- as.integer(Sys.getenv("SHINY_PORT"))
+
+shinyApp(ui = ui, server = server,
+         options = list(
+             port = app_port,
+             host = "0.0.0.0"))

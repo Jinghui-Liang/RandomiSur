@@ -198,7 +198,12 @@ cycle_template <- function(data,
     return(cycle_df)
 }
 
-generate_plan <- function(data, plan_ls, subj_ls){
+generate_plan <- function(data, plan_ls, subj_ls, seed = 1){
+    if(is.null(seed)){
+        stop("A random seed is necessary for reproducible randomization.")
+    } else {
+        set.seed(seed)
+    }
     plan_df <- as.data.frame(matrix(nrow = 0, ncol = (max(data$q_num)+1)))
     colnames(plan_df) <- c(paste0("p", 1:max(data$q_num)), "order_label")
     if ("Fixed order" %in% plan_ls){
