@@ -1,2 +1,4 @@
 OLD
 .DS_Store
+.RData
+.Rhistory
