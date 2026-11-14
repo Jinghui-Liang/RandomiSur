@@ -10,22 +10,19 @@ quest_name <- readLines("stdin", n = 1)
 
 source ("R/make_scale.R")
 
-cat ("Questionnaire has parsed and saved to `www` \n")
+cat ("Questionnaire has parsed and saved to /var/server/www \n")
 
 qlen <- nrow (quest)
 cat ("Reading evnironment configuration... \n")
 
-if (file.exists("/.dockerenv")) {
-  readRenviron("server.env")
-} else {
-  readRenviron(".env")
-}
+readRenviron(".env")
+
 env_port <- Sys.getenv('SQL_PORT')
 env_password <- Sys.getenv('DB_PASS')
 env_usr <- Sys.getenv('USR_NAME')
 env_quest <- quest_name
 
-cat ("Arguments accepted, inatialising ...... \n")
+cat ("Arguments accepted, initializing ...... \n")
 
 if (position == "local") {
   sql_dbname <- tools::file_path_sans_ext (quest_name)
@@ -46,4 +43,4 @@ source ("R/init_trial.R")
 source ("R/insertProc.R")
 source ("R/db_conf.R")
 
-cat("Initialization done")
+cat("Initialization done\n")
