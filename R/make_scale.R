@@ -4,16 +4,13 @@ if(file.exists("/.dockerenv")) {
 } else {
   if(interactive()) {
       questPath <- "../scalepool/fullscale.csv"
-      # questPath <- "../inject-order/fullscale.csv"
   } else {
     questPath <- paste0("./scalepool/", quest_name)
   }
   outputDir <- "./server/www/"
 }
 
-cat(questPath)
-
-dat <- readr::read_csv(questPath) |>
+dat <- readr::read_csv(questPath, show_col_types = FALSE) |>
     dplyr::mutate(choices = ifelse(choices == "NA", NA_real, choices),
                   required = ifelse(required == "NA", NA_real, required))
 
@@ -33,7 +30,6 @@ demo_js <- demo |>
                                                USE.NAMES = FALSE)
                                    ))
 
-# demo_js <- dplyr::bind_rows(demo_strvar, demo_catvar)
 demoJSON <- jsonlite::toJSON(demo_js, pretty = TRUE)
 
 ## convert scale to JSON
