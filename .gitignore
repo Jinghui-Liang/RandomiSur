@@ -2,3 +2,8 @@ OLD
 .DS_Store
 .RData
 .Rhistory
+/raw_data/*
+!/raw_data/.gitkeep
+/scalepool/df-*
+server/www/private/conf.ini
+server/www/scale.json
