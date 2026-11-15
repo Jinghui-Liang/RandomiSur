@@ -1,6 +1,6 @@
-library(shiny)
-library(bslib)
-library(tidyverse)
+suppressPackageStartupMessages({library(shiny)})
+suppressPackageStartupMessages({library(tidyverse)})
+suppressPackageStartupMessages({library(bslib)})
 
 source("./default.R")
 
@@ -250,9 +250,12 @@ server <- function(input, output){
     ##     )
 }
 
-app_port <- as.integer(Sys.getenv("SHINY_PORT"))
+app_port <- as.numeric(Sys.getenv("SHINY_PORT"))
 
-shinyApp(ui = ui, server = server,
-         options = list(
-             port = app_port,
-             host = "0.0.0.0"))
+suppressWarnings({
+    shinyApp(ui = ui, server = server,
+             options = list(
+                 port = app_port,
+                 host = "0.0.0.0"))
+})
+
