@@ -1,0 +1,12 @@
+﻿question,choices,required,label,demographic
+What is your age?,,n,age,y
+What is your gender,male/female,n,gender,y
+I am the life of the party.,Inaccurate/Neutral/Accurate,y,A,
+I feel little concern for others.,,n,B,
+I am always prepared.,,,C,
+I get stressed out easily.,,,A,
+I have a rich vocabulary.,,,B,
+I don't talk a lot.,,,C,
+I am interested in people.,,,A,
+I leave my belongings around.,,,B,
+I am relaxed most of the time.,,,C,
