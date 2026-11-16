@@ -8,7 +8,8 @@ readRenviron("/var/.env")
 
 ui <- page_sidebar(
     title = "Order builder",
-    sidebar = sidebar(helpText = "Randomization strategies",
+    sidebar = sidebar(width = 500,
+                      helpText = "Randomization strategies",
                       fileInput(
                           inputId = "file", label = NULL,
                           accept = c("text/csv",
@@ -16,6 +17,7 @@ ui <- page_sidebar(
                                      ".csv"
                                      )
                       ),
+                      actionButton("clear_all", "Clear all"),
                       numericInput(
                           inputId = "Seed",
                           label = "seed",
@@ -23,7 +25,7 @@ ui <- page_sidebar(
                       ),
                       checkboxGroupInput(
                           inputId = "select",
-                          label = "Select Option",
+                          label = "Algorithm",
                           choices = list(
                               "Fixed order",
                               "Simple randomization",
@@ -113,6 +115,16 @@ ui <- page_sidebar(
                               value = 3))
                       ),
 
+    tags$head(tags$style(HTML("
+        #select { width: 100%; max-width: none; }
+        #select .checkbox label { white-space: nowrap; }
+        #order_plan table { width: auto !important; }
+        #order_plan th, #order_plan td {
+            padding: 4px 12px !important;
+            white-space: nowrap;
+        }
+    "))),
+
     ## downloadButton(
     ##     outputId = "download",
     ##     label = "Download order datasets"
@@ -139,6 +151,10 @@ ui <- page_sidebar(
         nav_panel(title = "builder",
                   textOutput(outputId = "strategy"),
                   tableOutput(outputId = "plan")),
+        ## Show the condition label at each generated item position
+        nav_panel(title = "condition distribution",
+                  textOutput(outputId = "condition_strategy"),
+                  tableOutput(outputId = "condition_distribution")),
         ## panel 3 shows assignment plan
         nav_panel(title = "plan",
                   tableOutput(outputId = "order_plan")),
@@ -150,13 +166,22 @@ ui <- page_sidebar(
     )
 )
 
-server <- function(input, output){
+server <- function(input, output, session){
+
+    observeEvent(input$clear_all, {
+        updateCheckboxGroupInput(session, "select", selected = character(0))
+        for (suffix in c("fx", "rd", "psr", "ls", "gff", "grf", "gfr",
+                         "grr", "cff", "crf", "cfr", "crr")) {
+            updateNumericInput(session, paste0("n_subj_", suffix), value = 0)
+        }
+    })
 
     observeEvent(input$stop_app, {
         shiny::stopApp()
     })
     
     get_data <- reactive({
+        req(input$file)
         data <- suppressMessages(
             readr::read_csv(input$file$datapath))
     })
@@ -177,10 +202,39 @@ server <- function(input, output){
     })
 
     get_order <- reactive({
+        req(input$file, input$select)
+        algorithms <- c(
+            "Fixed order", "Simple randomization",
+            "Permuted-Subblock Randomization (PSR)", "Latin Square",
+            "Fixed Grouping", "Random Grouping - factor",
+            "Random Grouping - item", "Random Grouping - both",
+            "Fixed Cycling", "Random Cycling - factor",
+            "Random Cycling - item", "Random Cycling - both"
+        )
+        selected_n <- get_n()[match(input$select, algorithms)]
+        validate(need(
+            length(selected_n) == length(input$select) &&
+                all(is.finite(selected_n) & selected_n > 0 &
+                    selected_n == floor(selected_n)),
+            "Enter a positive whole-number sample size for each selected algorithm."
+        ))
         generate_plan(data = tidy_scale(get_data()),
                       plan_ls = input$select,
                       subj_ls = get_n(),
                       seed = input$Seed)
+    })
+
+    get_condition_distribution <- reactive({
+        req(input$file, input$select)
+        orders <- get_order()
+        items <- tidy_scale(get_data())
+        position_cols <- grep("^p[0-9]+$", names(orders), value = TRUE)
+
+        # Reuse the generated orders; do not randomize a second time.
+        orders[position_cols] <- lapply(orders[position_cols], function(ids) {
+            as.character(items$label[match(ids, items$q_num)])
+        })
+        orders
     })
 
     get_plan <- reactive({
@@ -197,36 +251,41 @@ server <- function(input, output){
         }
     })
     
-    ## dynamic output for panel "builder"
-    output$strategy <- renderText({
-        if(is.null(input$file)){
-            stop('Select a file from "scalepool" directory to start.')
-        } else {text <- paste("Current plans:", paste(input$select, collapse = ", "), ".")}
+    ## Both panels describe the same selected strategies.
+    strategy_text <- reactive({
+        if (length(input$select) == 0) return("")
+        paste0("Current plans: ", paste(input$select, collapse = ", "), ".")
     })
 
+    output$strategy <- renderText({ strategy_text() })
+    output$condition_strategy <- renderText({ strategy_text() })
+
+    ## Missing input is guidance, not an application error.
     output$plan <- renderTable({
-        if(is.null(input$select)){
-            paste("No strategy has been selected yet.")
-        } else {   
-            ## ------ here is how you generate your data ------
-            ## plan_df <- generate_plan(data = tidy_scale(get_data()),
-            ##                          plan_ls = input$select,
-            ##                          subj_ls = get_n())
-            ## ------
-            plan_df <- get_order()
-        }})
+        validate(
+            need(!is.null(input$file), "Select a questionnaire CSV to start."),
+            need(length(input$select) > 0, "No strategy has been selected yet.")
+        )
+        get_order()
+    })
+
+    output$condition_distribution <- renderTable({
+        validate(
+            need(!is.null(input$file), "Select a questionnaire CSV to start."),
+            need(length(input$select) > 0, "No strategy has been selected yet.")
+        )
+        get_condition_distribution()
+    })
 
     ## dynamic output for panel "plan"
     output$order_plan <- renderTable({
-        if(is.null(input$select)){
-            paste("No strategy has been selected yet.")
-        } else {
-            f.order <- get_plan()
-            ## plan_subj(plan = output$plan,
-            ##                  subj_ls = get_n())
-        }
-    })
-    
+        validate(
+            need(!is.null(input$file), "Select a questionnaire CSV to start."),
+            need(length(input$select) > 0, "No strategy has been selected yet.")
+        )
+        get_plan()
+    }, spacing = "xs", width = "auto")
+
     ## refer to ui for output on panel 'description'.
     output$download <- downloadHandler(
         filename = function(){"df-order.zip"},
